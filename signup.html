@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create Account</title>
+<style>
+    body { font-family: Arial; background: #eef6ff; padding: 40px; text-align:center; }
+    .box { width:350px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px #ddd; }
+    input, button { width:100%; padding:10px; margin:8px 0; border-radius:6px; border:1px solid #ccc; }
+    button { background:#28a745; color:white; border:none; cursor:pointer; }
+    button:hover { background:#1e7e34; }
+</style>
+</head>
+
+<body>
+<div class="box">
+    <h2>Create Account</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="createAccount()">Create Account</button>
+    <p><a href="index.html">Back to Login</a></p>
+    <p id="msg" style="color:green;"></p>
+</div>
+
+<script>
+function createAccount() {
+    let email = document.getElementById("email").value;
+    let pass = document.getElementById("password").value;
+
+    localStorage.setItem("user_email", email);
+    localStorage.setItem("user_pass", pass);
+
+    document.getElementById("msg").innerHTML = "Account created successfully!";
+}
+</script>
+</body>
+</html>

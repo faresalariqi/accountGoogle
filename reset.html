@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Reset Password</title>
+<style>
+    body { font-family:Arial; background:#fff8e1; padding:40px; text-align:center; }
+    .box { width:350px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px #ddd; }
+    input, button { width:100%; padding:10px; margin:8px 0; border-radius:6px; border:1px solid #ccc; }
+    button { background:#ff9800; color:white; border:none; cursor:pointer; }
+    button:hover { background:#e68900; }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Reset Password</h2>
+    <input type="email" id="email" placeholder="Enter your email">
+    <input type="password" id="newpass" placeholder="New password">
+    <button onclick="resetPass()">Reset</button>
+    <p><a href="index.html">Back to Login</a></p>
+    <p id="msg" style="color:green;"></p>
+</div>
+
+<script>
+function resetPass() {
+    let storedEmail = localStorage.getItem("user_email");
+    let email = document.getElementById("email").value;
+
+    if (email === storedEmail) {
+        localStorage.setItem("user_pass", document.getElementById("newpass").value);
+        document.getElementById("msg").innerHTML = "Password updated successfully!";
+    } 
+    else {
+        document.getElementById("msg").innerHTML = "Email not found.";
+    }
+}
+</script>
+
+</body>
+</html>
