@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login & Sign-Up Page</title>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f1f7ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        background: #fff;
+        padding: 25px;
+        width: 350px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+    button {
+        background: #0077ff;
+        border: none;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+    }
+    button:hover {
+        background: #005ccc;
+    }
+    #googleBtn {
+        background: #dd4b39;
+    }
+    #message {
+        color: green;
+        font-size: 14px;
+        text-align: center;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h3>Login / Create Account</h3>
+    
+    <input type="email" id="email" placeholder="Enter Email" required>
+    <input type="password" id="password" placeholder="Enter Password" required>
+
+    <button id="signupBtn">Create Account</button>
+    <button id="loginBtn">Login</button>
+    <button id="googleBtn">Sign in with Google</button>
+
+    <p id="message"></p>
+</div>
+
+<script>
+     // 🔥 Replace this with YOUR Firebase config 🔥
+     const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "noreply@mywebsite-f287e.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    // Elements
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const message = document.getElementById("message");
+
+    // Create Account
+    document.getElementById("signupBtn").onclick = () => {
+        auth.createUserWithEmailAndPassword(email.value, password.value)
+        .then(() => message.textContent = "🎉 Account created successfully!")
+        .catch(err => message.textContent = err.message);
+    };
+
+    // Login
+    document.getElementById("loginBtn").onclick = () => {
+        auth.signInWithEmailAndPassword(email.value, password.value)
+        .then(() => message.textContent = "✅ Logged in successfully!")
+        .catch(err => message.textContent = err.message);
+    };
+
+    // Google Sign-In
+    document.getElementById("googleBtn").onclick = () => {
+        auth.signInWithPopup(provider)
+        .then(result => {
+            const user = result.user;
+            message.textContent = "👋 Hello " + user.displayName;
+        })
+        .catch(err => message.textContent = err.message);
+    };
+</script>
+
+</body>
+</html>
